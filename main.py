@@ -29,7 +29,8 @@ while running:
 	fighter_1.draw(screen)
 	fighter_2.draw(screen) 
 	
-z
+
+	figu = 5
 	fighter_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_2)
 	# fighter_2.move()
 	for event in pg.event.get():
