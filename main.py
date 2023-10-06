@@ -29,7 +29,7 @@ while running:
 	fighter_1.draw(screen)
 	fighter_2.draw(screen) 
 	
-
+# học lập trình không hề khó
 	figu = 5
 	fighter_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_2)
 	# fighter_2.move()
