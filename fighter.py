@@ -55,6 +55,8 @@ class Fighter():
 		# update coords
 		self.rect.x += dx
 		self.rect.y += dy
+		#print(1)
+		# viet hung haong
 
 
 		

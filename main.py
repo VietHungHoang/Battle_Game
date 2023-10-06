@@ -13,9 +13,10 @@ FPS = 60
 
 #load background image
 bg_image = pg.image.load("assets/images/background/background.jpg").convert_alpha()
-
+#init player
 fighter_1 = Fighter(200, 310)
 fighter_2 = Fighter(700, 310)
+
 
 def draw_bg():
 	scaled_bg = pg.transform.scale(bg_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -27,6 +28,7 @@ while running:
 	draw_bg()
 	fighter_1.draw(screen)
 	fighter_2.draw(screen) 
+	
 z
 	fighter_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_2)
 	# fighter_2.move()
