@@ -28,8 +28,8 @@ WARRIOR_SCALE = 4
 WIZARD_SCALE = 3
 
 #init player
-fighter_1 = Fighter(200, 310, WARRIOR_SIZE, WARRIOR_SCALE, WARRIOR_OFFSET, warrior_sheet, WARRIOR_ANIMATION_STEPS)
-fighter_2 = Fighter(700, 310, WIZARD_SIZE, WIZARD_SCALE, WIZARD_OFFSET, wizard_sheet, WIZARD_ANIMATION_STEPS)
+fighter_1 = Fighter(1, 200, 310, WARRIOR_SIZE, WARRIOR_SCALE, WARRIOR_OFFSET, warrior_sheet, WARRIOR_ANIMATION_STEPS)
+fighter_2 = Fighter(2, 700, 310, WIZARD_SIZE, WIZARD_SCALE, WIZARD_OFFSET, wizard_sheet, WIZARD_ANIMATION_STEPS)
 
 
 def draw_bg():
@@ -50,11 +50,12 @@ while running:
 	#show player stats
 	draw_health_bars(fighter_1.health, 20, 20)
 	draw_health_bars(fighter_2.health,SCREEN_WIDTH - 20 - 400, 20)
+	fighter_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_2)
 	fighter_1.draw(screen)
 	fighter_2.draw(screen) 
-
-	fighter_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_2)
-	# fighter_2.move()
+	fighter_1.update()
+	fighter_2.update()
+	fighter_2.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_1)
 	for event in pg.event.get():
 		if event.type == pg.QUIT: running = False
 	pg.display.update()
