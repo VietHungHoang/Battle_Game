@@ -1,7 +1,7 @@
 import pygame as pg
 
 class Fighter():
-	def __init__(self,player, x, y, size, scale, offset, sprite_sheet, animation_list):
+	def __init__(self,player, x, y, size, scale, offset, sprite_sheet, animation_list, attack_sound):
 		self.player = player
 		self.x = x
 		self.y = y
@@ -20,9 +20,10 @@ class Fighter():
 		self.attack_type = 0
 		self.attacking = False
 		self.attack_cooldown = 20 #cooldown time between 2 attacks
+		self.attack_sound = attack_sound
 		self.health = 100
 		self.hit = False
-		self.flip = False
+		self.flip = False if self.player == 1 else True
 		self.death = False
 	def draw(self, surface):
 		# pg.draw.rect(surface, 'red', self.rect)
@@ -71,12 +72,13 @@ class Fighter():
 	def attack(self, surface, target):
 		if self.attack_cooldown == 0:
 			self.attacking = True
-			attacking_rect = pg.Rect((self.rect.centerx - (2 * self.rect.width * self.flip), self.rect.y, self.rect.width * 2, self.rect.height))
+			self.attack_sound.play()
+			attacking_rect = pg.Rect((self.rect.centerx - 1.5 * self.rect.width, self.rect.y, self.rect.width * 3, self.rect.height))
 			if attacking_rect.colliderect(target.rect):
 				target.health -= 10
-				target.hit = False
-
-
+				target.hit = True
+				if (self.flip and target.rect.x >= self.rect.x) or (not self.flip and target.rect.x <= self.rect.x):
+					self.flip = False if self.flip else True
 			# pg.draw.rect(surface,'green', attacking_rect)
 
 	def move(self, screen_width, screen_height, surface, target):
@@ -93,9 +95,11 @@ class Fighter():
 				if key[pg.K_a]:
 					dx = -SPEED
 					self.running = True
+					self.flip = True
 				if key[pg.K_d]:
 					dx = SPEED
 					self.running = True
+					self.flip = False
 				if key[pg.K_w] and self.jumping == False:
 					self.vel_y = -30
 					self.jumping = True
@@ -110,9 +114,12 @@ class Fighter():
 				if key[pg.K_LEFT]:
 					dx = -SPEED
 					self.running = True
+					self.flip = True
 				if key[pg.K_RIGHT]:
 					dx = SPEED
 					self.running = True
+					self.flip = False
+
 				if key[pg.K_UP] and self.jumping == False:
 					self.vel_y = -30
 					self.jumping = True
@@ -131,7 +138,7 @@ class Fighter():
 		dy += self.vel_y
 
 		# esure player 
-		self.flip = True if not self.death and not target.death and self.rect.centerx > target.rect.centerx else False
+		# self.flip = True if not self.death and not target.death and self.rect.centerx > target.rect.centerx else False
 
 		# ensure player stays on screen
 		if self.rect.left + dx < 0: dx = -self.rect.left
